@@ -1,0 +1,290 @@
+@font-face {
+  font-family: 'Digital7';
+  src: url('fonts/digital-7.regular.ttf');
+  font-style: normal;
+}
+
+/* ================= GLOBAL RESET ================= */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  color: #fff;
+  font-family: 'NeutraTextDemi', Arial, sans-serif;
+  font-size: 11px;
+}
+
+/* Center stage on any device */
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* ================= MAIN FRAME (LOCKED STAGE 320x480) ================= */
+
+.adFrame1 {
+  width: 320px;
+  height: 480px;
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto;
+  touch-action: manipulation;
+  padding: 6px; /* safe zone */
+}
+
+/* ================= CANVAS ELEMENT ================= */
+
+#myCanvas,
+#mainCanvas,
+.adFrame1 canvas{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 320px;
+  height: 480px;
+  z-index: 2;
+  pointer-events: none; /* do not block interaction */
+  display: block;
+}
+
+/* ================= GLOBAL IMAGE HANDLING ================= */
+
+.adFrame1 img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* Full background helper */
+.fullBgImage {
+  width: 320px;
+  height: 480px;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* ================= DT LOGO – FIXED VISIBILITY ================= */
+
+.dtLogo{
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  z-index: 99999;       /* force above canvas and cubes */
+  pointer-events: auto; /* allow clicking */
+}
+
+.dtLogo img{
+  width: 25px;          /* visible size on 320x480 */
+  height: auto;
+  display: block;
+}
+
+/* ================= CUBE STRUCTURE ================= */
+
+.container {
+  float: left;
+  perspective: 400px;
+  user-select: none;
+  top: 248px;
+}
+
+.box {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+  transform: translate3d(0, 0, 0);
+  transform-origin: 50% 50%;
+}
+
+.cubeHolder {
+  position: absolute;
+  left: 19px;
+  top: 194px;
+}
+
+.face {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  outline: 1px solid transparent;
+  overflow: hidden;
+}
+
+.face.front { background-color: #fff; }
+.face.back  { background-color: #fff; }
+.face.left  { background-color: #666; }
+.face.right { background-color: #898989; }
+
+/* ================= HAND GESTURE ================= */
+
+.touchGestureContainer{
+  position: absolute;
+  left: 60%;
+  top: 55%;
+  transform: translate(-50%, -50%) scale(0.85);
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.touchGestIcon{
+  width: 60px;
+  max-width: 18%;
+  height: auto;
+  transform-origin: center;
+  animation: swipeHint 1.6s ease-in-out infinite;
+}
+
+@keyframes swipeHint{
+  0%   { transform: translateX(0) translateY(0) scale(1); opacity: 0.85; }
+  20%  { transform: translateX(-18px) translateY(-2px) scale(1.02); opacity: 1; }
+  50%  { transform: translateX(18px) translateY(0) scale(1.03); opacity: 1; }
+  80%  { transform: translateX(0) translateY(2px) scale(1.01); opacity: 0.95; }
+  100% { transform: translateX(0) translateY(0) scale(1); opacity: 0.85; }
+}
+
+/* ================= CTA ================= */
+
+.cta-btn{
+  position: absolute;
+  top: 430px;
+  left: 78px;
+  cursor: pointer;
+  transition: transform 0.5s cubic-bezier(.64,1.99,.62,.9);
+  z-index: 10000;
+}
+
+.cta-btn:hover{
+  transform: scale(1.2);
+}
+
+.buy-now-cta{
+  width: 145px;
+  max-width: 45%;
+  height: auto;
+}
+
+/* ================= MAIN COPY ================= */
+
+.main-copy {
+  position: absolute;
+  top: 75px;
+  left: 9px;
+}
+
+.copy { position: absolute; }
+
+.copy1 { width: 102px; top: 43px; left: 46px; }
+.copy2 { width: 132px; top: 71px; left: 33px; }
+.copy3 { width: 90px;  top: 111px; left: 55px; }
+
+/* ================= STAR ANIMATION ================= */
+
+.stars-cont {
+  position: absolute;
+  width: 95px;
+  height: 100px;
+  left: 52px;
+  top: 213px;
+}
+
+.star {
+  position: absolute;
+  animation-duration: 1500ms;
+  animation-fill-mode: forwards;
+  pointer-events: none;
+}
+
+@keyframes fall-1 {
+  0% {
+    transform: translate(0,0) rotateX(45deg) rotateY(30deg) scale(.25);
+    opacity: 0;
+  }
+  5% {
+    transform: translate(10px,-10px) rotateX(45deg) rotateY(30deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(25px,200px) rotateX(180deg) rotateY(270deg) rotateZ(90deg);
+    opacity: 0;
+  }
+}
+
+/* ================= LOADING PAGE ================= */
+
+#loading-page {
+  position: absolute;
+  inset: 0;
+  background: #00a352;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loading-content {
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.loading-message {
+  font-size: 1.5em;
+  color: #fff;
+}
+
+.loading-bar-container {
+  width: 200px;
+  height: 4px;
+  border: 1.5px solid #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.loading-bar {
+  width: 0%;
+  height: 100%;
+  background: #fff;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ================= COUNTDOWN ================= */
+
+.countdown-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: black;
+}
+
+.label {
+  font-size: .65rem;
+  color: #48fc7b;
+}
+
+.digit {
+  font-size: 2.5rem;
+  color: #48fc7b;
+  font-family: 'Digital7';
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%,100% { text-shadow: 0 0 1px #48fc7b; }
+  50%     { text-shadow: 0 0 8px #48fc7b; }
+}
